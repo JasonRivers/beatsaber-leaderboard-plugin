@@ -9,7 +9,14 @@ class LocalLeaderboardsModel_AddScore_Patch
 {
     public static void Postfix(LocalLeaderboardsModel __instance)
     {
- 
+        try
+        {
+            __instance.Save();
+        }
+        catch
+        {
+
+        }
         try
         {
             PostScoreBehavior.PostScores();

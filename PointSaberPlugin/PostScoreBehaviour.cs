@@ -2,6 +2,7 @@
 using Steamworks;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -47,6 +48,7 @@ public class PostScoreBehavior : MonoBehaviour
         }
         Log("Call PostScoresRoutine");
         _instance.StartCoroutine(_instance.PostScoresRoutine());
+        Log("Coroutine started");
     }
 
     public IEnumerator PostScoresRoutine()
@@ -59,10 +61,14 @@ public class PostScoreBehavior : MonoBehaviour
         }
         else
         {
+            Log(String.Format("Logging scores to {0}", this.PostUrl));
             this.scores = newScores;
-            using (var www = new WWW(this.PostUrl, Encoding.UTF8.GetBytes(this.scores)))
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Content-Type", "application/json");
+            using (var www = new WWW(this.PostUrl, Encoding.UTF8.GetBytes(this.scores), headers))
             {
                 yield return www;
+                Log(String.Format("Upload Response: {0}", www.text));
             }
         }
     }
