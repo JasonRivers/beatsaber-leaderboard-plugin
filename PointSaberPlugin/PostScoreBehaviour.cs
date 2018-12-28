@@ -14,7 +14,7 @@ public class PostScoreBehavior : MonoBehaviour
 
     private string PostUrl
     {
-        get { return String.Format(SecretProvider.UrlTemplate, this.LeaderboardName); }
+        get { return ModPrefs.GetString(this.ModPrefsKey, "SaberPartyUrl", "", true); }
     }
 
     private string LeaderboardFilePath
@@ -31,11 +31,6 @@ public class PostScoreBehavior : MonoBehaviour
     private string ModPrefsKey
     {
         get { return "PointSaber"; }
-    }
-
-    private string LeaderboardName
-    {
-        get { return ModPrefs.GetString(this.ModPrefsKey, "LeaderboardName", Global.defaultLeaderboardId, true); }
     }
 
     private string GetScoresString()
